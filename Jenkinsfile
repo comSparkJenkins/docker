@@ -1,14 +1,16 @@
 pipeline 
 {
-  agent
-  {
-    docker { image 'maven:3.5.0-jdk-8' }
-  }
+  agent any
   
   stages 
   {
     stage('Build') 
     {
+	  agent
+	  {
+		docker { image 'maven:3.5.0-jdk-8' }
+	  }
+	  
       steps 
       {
 		  withMaven() 
@@ -23,11 +25,7 @@ pipeline
     {
       steps 
       {
-          withMaven() 
-          {
-		  	// Workaround for Jenkins issue 33510
-            sh 'cd maven && mvn site:site'
-          }
+      	echo 'Generate project documentation.'
       }
     }
     
